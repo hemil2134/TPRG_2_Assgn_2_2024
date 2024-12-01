@@ -27,7 +27,7 @@ s.listen(5)
 
 # Function to get the Pi's temperature
 def measure_temp():
-    t = os.popen('vcgencmd measure_temp').readline() #gets from the os, using vcgencmd - the core-temperature
+    t = os.popen('vcgencmd measure_temp').readline()
     temp = float(t.replace("temp=","").replace("'C\n",""))
     return temp
 
