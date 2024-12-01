@@ -42,8 +42,20 @@ def clock_frequency_arm():
 
 
 while True:
-  c, addr = s.accept()
-  print ('Got connection from',addr)
-  res = bytes(str(f_dict), 'utf-8') 
-  c.send(res)
-  c.close()
+    try:
+        c, addr = s.accept()
+        print ('Got connection from',addr)
+        data = (
+            f"\nTemperature: {measure_temp()}, "
+            f"\nVoltage Core: {measure_volts_core()}, "
+            f"\nVoltage SDRAM: {measure_volts_sdram_i()}, "
+            f"\nMemory ARM: {memory_arm()}, "
+            f"\nClock Frequency ARM: {clock_frequency_arm()}"
+        )
+        res = data.encode('utf-8')
+        c.send(res) 
+        c.close() 
+    except KeyboardInterrupt:
+        print("\nServer shutting down...")
+        s.close()
+        break
